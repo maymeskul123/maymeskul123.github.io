@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://maymeskul123.github.io/sitemap.xml
+
+# Для Google
+User-agent: Googlebot
+Allow: /
+
+# Для Yandex
+User-agent: Yandex
+Allow: /
+Clean-param: lang /index.html

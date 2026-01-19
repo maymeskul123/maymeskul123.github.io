@@ -249,6 +249,36 @@ li {
     line-height: 1.5;
 }
 
+/* Language Levels Styling */
+.language-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.language-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.language-item:last-child {
+    border-bottom: none;
+}
+
+.lang-name {
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.lang-level {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    font-weight: 400;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .content {

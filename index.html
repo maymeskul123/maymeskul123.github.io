@@ -1,12 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Основные мета-теги -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitaliy Maymeskul - Python Backend Developer</title>
+    <title>Vitaliy Maymeskul - Python Backend Developer | FastAPI, PostgreSQL, AI</title>
+    <meta name="description" content="Python Backend Developer with 5+ years experience. FastAPI, PostgreSQL, Docker, AI integration (Langchain, Ollama), Tron blockchain. Looking for remote work.">
+    <meta name="keywords" content="Python Developer, Backend Developer, FastAPI, PostgreSQL, Docker, AI Integration, Blockchain, Tron, Remote Work, Ukraine">
+    <meta name="author" content="Vitaliy Maymeskul">
+    <meta name="robots" content="index, follow">
+
+    <!-- Для социальных сетей (Open Graph) -->
+    <meta property="og:title" content="Vitaliy Maymeskul - Python Backend Developer">
+    <meta property="og:description" content="Python Backend Developer with 5+ years experience in FastAPI, PostgreSQL, AI integration">
+    <meta property="og:image" content="https://maymeskul123.github.io/og-image.jpg">
+    <meta property="og:url" content="https://maymeskul123.github.io">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vitaliy Maymeskul Resume">
+
+    <!-- Для Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vitaliy Maymeskul - Python Backend Developer">
+    <meta name="twitter:description" content="Python Backend Developer specializing in FastAPI, PostgreSQL, AI">
+    <meta name="twitter:image" content="https://maymeskul123.github.io/twitter-card.jpg">
+
+    <!-- Гео-теги -->
+    <meta name="geo.region" content="UA-OD">
+    <meta name="geo.placename" content="Odessa">
+    <meta name="geo.position" content="46.482526;30.723310">
+    <meta name="ICBM" content="46.482526, 30.723310">
+
+    <!-- Язык -->
+    <meta http-equiv="content-language" content="en">
+    <link rel="alternate" hreflang="en" href="https://maymeskul123.github.io">
+    <link rel="alternate" hreflang="ru" href="https://maymeskul123.github.io">
+    <link rel="alternate" hreflang="uk" href="https://maymeskul123.github.io">
+    <link rel="alternate" hreflang="x-default" href="https://maymeskul123.github.io">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#2d5af1">
+    
+    <!-- Стили -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Vitaliy Maymeskul",
+        "url": "https://maymeskul123.github.io",
+        "email": "mailto:maymeskul@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Odessa",
+            "addressRegion": "Odessa Oblast",
+            "addressCountry": "UA"
+        },
+        "jobTitle": "Python Backend Developer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Freelance/Open to work"
+        },
+        "description": "Backend developer with 5+ years of experience specializing in Python, FastAPI, PostgreSQL, Docker, AI integration and blockchain technologies.",
+        "knowsAbout": [
+            "Python", "FastAPI", "PostgreSQL", "Docker", "Redis",
+            "Linux", "Git", "SQLAlchemy", "Langchain", "Tron Blockchain",
+            "AI Integration", "WebSockets", "asyncio", "API Development"
+        ],
+        "knowsLanguage": [
+            {
+                "@type": "Language",
+                "name": "Ukrainian",
+                "proficiencyLevel": "Native"
+            },
+            {
+                "@type": "Language",
+                "name": "Russian",
+                "proficiencyLevel": "Native"
+            },
+            {
+                "@type": "Language",
+                "name": "English",
+                "proficiencyLevel": "Pre-Intermediate"
+            }
+        ],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Odessa National Academy of Communications"
+        },
+        "sameAs": [
+            "https://github.com/maymeskul123",
+            "https://t.me/Maymeskul"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Vitaliy Maymeskul - Python Backend Developer Resume",
+        "description": "Online resume of Python Backend Developer with 5+ years experience",
+        "url": "https://maymeskul123.github.io",
+        "keywords": "Python Developer, Backend Developer, Resume, Portfolio",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-12-29",
+        "author": {
+            "@type": "Person",
+            "name": "Vitaliy Maymeskul"
+        }
+    }
+    </script>
+    
+    <!-- PDF библиотека -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -26,19 +139,19 @@
                 <div class="title" data-key="title">Python Backend Developer</div>
                 <div class="contact">
                     <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                         <span data-key="location">Odessa, Ukraine</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
                         <span>maymeskul@gmail.com</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fab fa-telegram"></i>
+                        <i class="fab fa-telegram" aria-hidden="true"></i>
                         <span>@Maymeskul</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fab fa-github"></i>
+                        <i class="fab fa-github" aria-hidden="true"></i>
                         <span>github.com/Maymeskul</span>
                     </div>
                 </div>
@@ -78,9 +191,20 @@
                     
                     <section class="section">
                         <h2 class="section-title" data-key="languages">LANGUAGES</h2>
-                        <p data-key="lang_ukrainian">Ukrainian (Native)<br>
-                        <span data-key="lang_russian">Russian (Native)</span><br>
-                        <span data-key="lang_english">English (Pre-Intermediate+)</span></p>
+                        <div class="language-levels">
+                            <div class="language-item" itemscope itemtype="http://schema.org/Language">
+                                <span class="lang-name" itemprop="name" data-key="lang_ukrainian">Ukrainian</span>
+                                <span class="lang-level" itemprop="proficiencyLevel" content="Native" data-key="lang_level_native">(Native)</span>
+                            </div>
+                            <div class="language-item" itemscope itemtype="http://schema.org/Language">
+                                <span class="lang-name" itemprop="name" data-key="lang_russian">Russian</span>
+                                <span class="lang-level" itemprop="proficiencyLevel" content="Native" data-key="lang_level_native">(Native)</span>
+                            </div>
+                            <div class="language-item" itemscope itemtype="http://schema.org/Language">
+                                <span class="lang-name" itemprop="name" data-key="lang_english">English</span>
+                                <span class="lang-level" itemprop="proficiencyLevel" content="Pre-Intermediate" data-key="lang_level_pre_intermediate">(Pre-Intermediate+)</span>
+                            </div>
+                        </div>
                     </section>
                 </aside>
                 
