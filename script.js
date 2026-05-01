@@ -17,29 +17,21 @@ async function getClientIp() {
 }
 
 function sendVisitLog(ip) {
-    if (VISIT_LOG_ENDPOINT.includes('https://script.google.com/macros/s/AKfycbxi4Frh3xZAOo3YjCx2Q2JbgkQaoXhHvFlVP9uHQgcMMEFbNgw1FzOij7ybfa9Cbi-NuQ/exec')) return;
-
-    const payload = JSON.stringify({
+    const params = new URLSearchParams({
         action: 'visit',
-        ip,
+        ip: ip,
         date: new Date().toISOString()
     });
 
-    if (navigator.sendBeacon) {
-        const blob = new Blob([payload], { type: 'application/json' });
-        navigator.sendBeacon(VISIT_LOG_ENDPOINT, blob);
-        return;
-    }
+    const url = `${VISIT_LOG_ENDPOINT}?${params.toString()}`;
 
-    fetch(VISIT_LOG_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-        keepalive: true,
-        mode: 'no-cors'
-    }).catch(error => {
-        console.warn('Visit log failed:', error);
-    });
+    console.log('Sending visit log via GET:', url);
+
+    // Use img to send GET request (works with no-cors)
+    const img = new Image();
+    img.src = url;
+    img.onerror = () => console.log('Visit log sent (img onload)');
+    img.onload = () => console.log('Visit log sent (img onload)');
 }
 
 async function logVisit() {

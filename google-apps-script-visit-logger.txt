@@ -41,21 +41,47 @@ function writeLog(data) {
 }
 
 function handleRequest(e) {
+  Logger.log('Request received: ' + JSON.stringify(e));
+
   let payload = {};
 
-  if (e.postData && e.postData.type === 'application/json') {
-    try {
-      payload = JSON.parse(e.postData.contents || '{}');
-    } catch (error) {
-      payload = {};
-    }
-  } else {
-    payload = e.parameter || {};
+  // Handle GET parameters
+  if (e.parameter) {
+    payload = e.parameter;
+    Logger.log('Parameters: ' + JSON.stringify(payload));
   }
+
+  // Handle POST data
+  if (e.postData) {
+    Logger.log('PostData type: ' + e.postData.type);
+    Logger.log('PostData contents: ' + e.postData.contents);
+
+    if (e.postData.type === 'application/json') {
+      try {
+        payload = JSON.parse(e.postData.contents || '{}');
+      } catch (error) {
+        Logger.log('JSON parse error: ' + error);
+        payload = {};
+      }
+    } else if (e.postData.type === 'multipart/form-data') {
+      // Handle sendBeacon data
+      try {
+        const data = e.postData.contents;
+        payload = JSON.parse(data);
+      } catch (error) {
+        Logger.log('Multipart parse error: ' + error);
+        payload = {};
+      }
+    }
+  }
+
+  Logger.log('Final payload: ' + JSON.stringify(payload));
 
   const action = (payload.action || 'count').toString();
   const ip = (payload.ip || 'unknown').toString();
   const date = (payload.date || new Date().toISOString()).toString();
+
+  Logger.log('Action: ' + action + ', IP: ' + ip + ', Date: ' + date);
 
   const logData = readLog();
   logData.entries = logData.entries || [];
@@ -67,6 +93,7 @@ function handleRequest(e) {
       ip
     });
     writeLog(logData);
+    Logger.log('Visit logged. Total entries: ' + logData.entries.length);
   }
 
   return ContentService
@@ -80,6 +107,13 @@ function doGet(e) {
 
 function doPost(e) {
   return handleRequest(e);
+}
+
+// Function to view logs (call from Apps Script editor)
+function viewLogs() {
+  const logData = readLog();
+  Logger.log('Current logs: ' + JSON.stringify(logData, null, 2));
+  return logData;
 }
 
 Примечания:
