@@ -18,10 +18,17 @@ const LOG_FILE_NAME = 'visit_log.json';
 
 function getLogFile() {
   const files = DriveApp.getFilesByName(LOG_FILE_NAME);
+  let file;
   if (files.hasNext()) {
-    return files.next();
+    file = files.next();
+    // If there are multiple files, use the first one and delete others
+    while (files.hasNext()) {
+      files.next().setTrashed(true);
+    }
+  } else {
+    file = DriveApp.createFile(LOG_FILE_NAME, JSON.stringify({ entries: [] }, null, 2), MimeType.PLAIN_TEXT);
   }
-  return DriveApp.createFile(LOG_FILE_NAME, JSON.stringify({ entries: [] }, null, 2), MimeType.PLAIN_TEXT);
+  return file;
 }
 
 function readLog() {
@@ -98,7 +105,10 @@ function handleRequest(e) {
 
   return ContentService
     .createTextOutput(JSON.stringify({ count: logData.entries.length, entries: logData.entries.slice(-1) }))
-    .setMimeType(ContentService.MimeType.JSON);
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader('Access-Control-Allow-Origin', '*')
+    .setHeader('Access-Control-Allow-Methods', 'GET, POST')
+    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 function doGet(e) {

@@ -2,7 +2,7 @@
 let currentLang = 'en';
 
 // Google Apps Script endpoint для записи логов на Google Drive
-const VISIT_LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxi4Frh3xZAOo3YjCx2Q2JbgkQaoXhHvFlVP9uHQgcMMEFbNgw1FzOij7ybfa9Cbi-NuQ/exec';
+const VISIT_LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyfGNdtmGbUHFQxgbhrlRr_yT9hpgnxirVcRgUY9PlBZTgONATjuBpsPbxqoa5GrCnuAw/exec';
 
 async function getClientIp() {
     try {
@@ -25,13 +25,19 @@ function sendVisitLog(ip) {
 
     const url = `${VISIT_LOG_ENDPOINT}?${params.toString()}`;
 
-    console.log('Sending visit log via GET:', url);
+    console.log('Sending visit log via fetch:', url);
 
-    // Use img to send GET request (works with no-cors)
-    const img = new Image();
-    img.src = url;
-    img.onerror = () => console.log('Visit log sent (img onload)');
-    img.onload = () => console.log('Visit log sent (img onload)');
+    fetch(url, {
+        method: 'GET',
+        mode: 'cors'
+    }).then(response => {
+        console.log('Visit log response:', response);
+        return response.text();
+    }).then(text => {
+        console.log('Response text:', text);
+    }).catch(error => {
+        console.warn('Visit log failed:', error);
+    });
 }
 
 async function logVisit() {
