@@ -1,0 +1,89 @@
+Google Apps Script Visit Logger
+
+Цель:
+Записать на Google Drive файл с каждой загрузкой страницы в формате: count, date, ip.
+
+Инструкция:
+1. Откройте Google Apps Script (https://script.google.com).
+2. Создайте новый проект.
+3. Вставьте код из раздела "Code.gs" ниже.
+4. Разверните проект как Web App:
+   - Execute as: Me
+   - Who has access: Anyone
+5. Получите URL и замените YOUR_SCRIPT_ID в script.js на его значение.
+
+Code.gs:
+
+const LOG_FILE_NAME = 'visit_log.json';
+
+function getLogFile() {
+  const files = DriveApp.getFilesByName(LOG_FILE_NAME);
+  if (files.hasNext()) {
+    return files.next();
+  }
+  return DriveApp.createFile(LOG_FILE_NAME, JSON.stringify({ entries: [] }, null, 2), MimeType.PLAIN_TEXT);
+}
+
+function readLog() {
+  const file = getLogFile();
+  const content = file.getBlob().getDataAsString();
+  try {
+    return JSON.parse(content || '{"entries":[]}');
+  } catch (e) {
+    return { entries: [] };
+  }
+}
+
+function writeLog(data) {
+  const file = getLogFile();
+  file.setContent(JSON.stringify(data, null, 2));
+  return data;
+}
+
+function handleRequest(e) {
+  let payload = {};
+
+  if (e.postData && e.postData.type === 'application/json') {
+    try {
+      payload = JSON.parse(e.postData.contents || '{}');
+    } catch (error) {
+      payload = {};
+    }
+  } else {
+    payload = e.parameter || {};
+  }
+
+  const action = (payload.action || 'count').toString();
+  const ip = (payload.ip || 'unknown').toString();
+  const date = (payload.date || new Date().toISOString()).toString();
+
+  const logData = readLog();
+  logData.entries = logData.entries || [];
+
+  if (action === 'visit') {
+    logData.entries.push({
+      count: logData.entries.length + 1,
+      date,
+      ip
+    });
+    writeLog(logData);
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ count: logData.entries.length, entries: logData.entries.slice(-1) }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet(e) {
+  return handleRequest(e);
+}
+
+function doPost(e) {
+  return handleRequest(e);
+}
+
+Примечания:
+- Этот файл хранится в Google Drive в JSON-формате.
+- Если ваш сайт размещён на GitHub Pages, браузер может блокировать CORS. Сначала попробуйте работу с navigator.sendBeacon, а затем проверьте в логах Apps Script.
+- Если хотите, можно заменить api.ipify.org на другой сервис для определения IP.
+- Если нужно, можно добавить фильтр по уникальному IP или visitorId перед записью.

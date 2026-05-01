@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analytics Dashboard</title>
+</head>
+<body>
+
+<h2>Моя аналитика</h2>
+
+<div>Visits: <span id="visits">0</span></div>
+<div>Users: <span id="users">0</span></div>
+<div>Sessions: <span id="sessions">0</span></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbzb4za02B3eb8Igmd6JRx4hrxqREqupScoxeliPdiZfMwoz7HZCdmX9o9qIzGemeNIw/exec";
+const SITE_ID = "site_1";
+
+fetch(API_URL + "?site_id=" + SITE_ID)
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("visits").innerText = data.visits;
+    document.getElementById("users").innerText = data.users;
+    document.getElementById("sessions").innerText = data.sessions;
+  });
+</script>
+
+</body>
+</html>

@@ -1,6 +1,52 @@
 // Текущий язык
 let currentLang = 'en';
 
+// Google Apps Script endpoint для записи логов на Google Drive
+const VISIT_LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxi4Frh3xZAOo3YjCx2Q2JbgkQaoXhHvFlVP9uHQgcMMEFbNgw1FzOij7ybfa9Cbi-NuQ/exec';
+
+async function getClientIp() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        if (!response.ok) throw new Error('IP fetch failed');
+        const data = await response.json();
+        return data.ip || 'unknown';
+    } catch (error) {
+        console.warn('Failed to fetch client IP:', error);
+        return 'unknown';
+    }
+}
+
+function sendVisitLog(ip) {
+    if (VISIT_LOG_ENDPOINT.includes('https://script.google.com/macros/s/AKfycbxi4Frh3xZAOo3YjCx2Q2JbgkQaoXhHvFlVP9uHQgcMMEFbNgw1FzOij7ybfa9Cbi-NuQ/exec')) return;
+
+    const payload = JSON.stringify({
+        action: 'visit',
+        ip,
+        date: new Date().toISOString()
+    });
+
+    if (navigator.sendBeacon) {
+        const blob = new Blob([payload], { type: 'application/json' });
+        navigator.sendBeacon(VISIT_LOG_ENDPOINT, blob);
+        return;
+    }
+
+    fetch(VISIT_LOG_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+        mode: 'no-cors'
+    }).catch(error => {
+        console.warn('Visit log failed:', error);
+    });
+}
+
+async function logVisit() {
+    const ip = await getClientIp();
+    sendVisitLog(ip);
+}
+
 // Переводы
 const translations = {
     en: {
@@ -198,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const defaultLang = savedLang || (['ru', 'uk'].includes(browserLang) ? browserLang : 'en');
     
     translatePage(defaultLang);
+    logVisit();
     
     // Обработчики кнопок языка
     document.querySelectorAll('.lang-btn').forEach(btn => {
